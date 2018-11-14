@@ -8,7 +8,7 @@ public class Product {
 	private double iva;
 	private double pvp;
 
-	public Product(double discont, double iva, double pvp) {		
+	public Product(double discont, double iva, double pvp) {
 		this.discont = discont;
 		this.iva = iva;
 		this.pvp = pvp;

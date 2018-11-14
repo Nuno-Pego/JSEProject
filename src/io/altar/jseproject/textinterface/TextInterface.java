@@ -33,8 +33,8 @@ public class TextInterface {
 
 		}
 	}
-	
-//---------------------------------------------------------------------------------------
+
+	// ---------------------------------------------------------------------------------------
 	private void productOptions() {
 
 		System.out.println("Por favor seleccione uma das opções:");
@@ -58,10 +58,10 @@ public class TextInterface {
 			double iva = scann.nextDouble();
 			System.out.println("Insira PVP");
 			double pvp = scann.nextDouble();
-			
+
 			scann.close();
-			
-			Product newProduct = new Product(discount,iva,pvp); 
+
+			Product newProduct = new Product(discount, iva, pvp);
 
 			break;
 		case 2:
@@ -83,8 +83,8 @@ public class TextInterface {
 		}
 	}
 
-//---------------------------------------------------------------------------------------
-	
+	// ---------------------------------------------------------------------------------------
+
 	private void shelfOptions() {
 
 		System.out.println("Por favor seleccione uma das opções:");
