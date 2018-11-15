@@ -6,8 +6,8 @@ import io.altar.jseproject.model.Product;
 
 public class TextInterface {
 
-	public void userInterface() {
-		
+	public static void userInterface() {
+
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Listar productos");
 		System.out.println("2) Listar prateleiras");
@@ -25,7 +25,7 @@ public class TextInterface {
 			shelfOptions();
 			break;
 		case 3:
-			System.out.println("Programa Terminado!");			
+			System.out.println("Programa Terminado!");
 			break;
 		default:
 			System.out.println("Erro! Escolha outra opção por favor");
@@ -37,7 +37,7 @@ public class TextInterface {
 	}
 
 	// ---------------------------------------------------------------------------------------
-	private void productOptions() {
+	private static void productOptions() {
 
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Criar novo producto");
@@ -59,24 +59,24 @@ public class TextInterface {
 				System.out.println("Inválido, tente novamente:");
 				value = scan.nextLine();
 			}
-			double discount = Double.parseDouble(value);			
+			double discount = Double.parseDouble(value);
 			System.out.println("Insira IVA");
 			value = scan.nextLine();
 			while (checkType(value, "Double") == false) {
 				System.out.println("Inválido, tente novamente:");
 				value = scan.nextLine();
 			}
-			double iva = Double.parseDouble(value);		
+			double iva = Double.parseDouble(value);
 			System.out.println("Insira PVP");
 			value = scan.nextLine();
 			while (checkType(value, "Double") == false) {
 				System.out.println("Inválido, tente novamente:");
 				value = scan.nextLine();
 			}
-			double pvp = Double.parseDouble(value);	
+			double pvp = Double.parseDouble(value);
 
 			Product newProduct = new Product(discount, iva, pvp);
-						
+
 			System.out.println("Producto adicionado");
 			productOptions();
 
@@ -104,7 +104,7 @@ public class TextInterface {
 
 	// ---------------------------------------------------------------------------------------
 
-	private void shelfOptions() {
+	private static void shelfOptions() {
 
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Criar nova prateleira");
@@ -145,7 +145,7 @@ public class TextInterface {
 	// ---------------------------------------------------------------------------------------
 	// ---------------------------------------------------------------------------------------
 
-	private boolean checkType(String value, String typeMatch) {
+	private static boolean checkType(String value, String typeMatch) {
 
 		try {
 			switch (typeMatch) {
