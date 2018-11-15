@@ -7,15 +7,15 @@ import io.altar.jseproject.model.Product;
 public class TextInterface {
 
 	public void userInterface() {
-
+		
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Listar productos");
 		System.out.println("2) Listar prateleiras");
 		System.out.println("3) Sair");
 
 		Scanner scan = new Scanner(System.in);
-		int userChoice = scan.nextInt();
-		scan.close();
+		String value = scan.nextLine();
+		int userChoice = checkType(value, "Int") ? Integer.parseInt(value) : 10;
 
 		switch (userChoice) {
 		case 1:
@@ -25,13 +25,15 @@ public class TextInterface {
 			shelfOptions();
 			break;
 		case 3:
+			System.out.println("Programa Terminado!");			
 			break;
 		default:
 			System.out.println("Erro! Escolha outra opção por favor");
 			userInterface();
 			break;
-
 		}
+
+		scan.close();
 	}
 
 	// ---------------------------------------------------------------------------------------
@@ -45,23 +47,38 @@ public class TextInterface {
 		System.out.println("5) Voltar ao ecrã anterior");
 
 		Scanner scan = new Scanner(System.in);
-		int userChoice = scan.nextInt();
-		scan.close();
+		String value = scan.nextLine();
+		int userChoice = checkType(value, "Int") ? Integer.parseInt(value) : 10;
 
 		switch (userChoice) {
 		case 1:
-			Scanner scann = new Scanner(System.in);
 
 			System.out.println("Insira Desconto");
-			double discount = scann.nextDouble();
+			value = scan.nextLine();
+			while (checkType(value, "Double") == false) {
+				System.out.println("Inválido, tente novamente:");
+				value = scan.nextLine();
+			}
+			double discount = Double.parseDouble(value);			
 			System.out.println("Insira IVA");
-			double iva = scann.nextDouble();
+			value = scan.nextLine();
+			while (checkType(value, "Double") == false) {
+				System.out.println("Inválido, tente novamente:");
+				value = scan.nextLine();
+			}
+			double iva = Double.parseDouble(value);		
 			System.out.println("Insira PVP");
-			double pvp = scann.nextDouble();
-
-			scann.close();
+			value = scan.nextLine();
+			while (checkType(value, "Double") == false) {
+				System.out.println("Inválido, tente novamente:");
+				value = scan.nextLine();
+			}
+			double pvp = Double.parseDouble(value);	
 
 			Product newProduct = new Product(discount, iva, pvp);
+						
+			System.out.println("Producto adicionado");
+			productOptions();
 
 			break;
 		case 2:
@@ -81,6 +98,8 @@ public class TextInterface {
 			productOptions();
 			break;
 		}
+
+		scan.close();
 	}
 
 	// ---------------------------------------------------------------------------------------
@@ -95,8 +114,8 @@ public class TextInterface {
 		System.out.println("5) Voltar ao ecrã anterior");
 
 		Scanner scan = new Scanner(System.in);
-		int userChoice = scan.nextInt();
-		scan.close();
+		String value = scan.nextLine();
+		int userChoice = checkType(value, "Int") ? Integer.parseInt(value) : 10;
 
 		switch (userChoice) {
 		case 1:
@@ -119,5 +138,31 @@ public class TextInterface {
 			shelfOptions();
 			break;
 		}
+
+		scan.close();
 	}
+
+	// ---------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------
+
+	private boolean checkType(String value, String typeMatch) {
+
+		try {
+			switch (typeMatch) {
+			case "Int":
+				Integer.parseInt(value);
+				break;
+			case "Double":
+				Double.parseDouble(value);
+				break;
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
 }
