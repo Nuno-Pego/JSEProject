@@ -6,7 +6,7 @@ import io.altar.jseproject.model.Product;
 
 public class TextInterface {
 
-	public static void userInterface() {
+	public void userInterface() {
 
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Listar productos");
@@ -37,7 +37,7 @@ public class TextInterface {
 	}
 
 	// ---------------------------------------------------------------------------------------
-	private static void productOptions() {
+	private void productOptions() {
 
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Criar novo producto");
@@ -104,7 +104,7 @@ public class TextInterface {
 
 	// ---------------------------------------------------------------------------------------
 
-	private static void shelfOptions() {
+	private void shelfOptions() {
 
 		System.out.println("Por favor seleccione uma das opções:");
 		System.out.println("1) Criar nova prateleira");
@@ -145,7 +145,7 @@ public class TextInterface {
 	// ---------------------------------------------------------------------------------------
 	// ---------------------------------------------------------------------------------------
 
-	private static boolean checkType(String value, String typeMatch) {
+	private boolean checkType(String value, String typeMatch) {
 
 		try {
 			switch (typeMatch) {
