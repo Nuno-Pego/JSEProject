@@ -75,7 +75,7 @@ public class TextInterface {
 			}
 			double pvp = Double.parseDouble(value);
 
-			Product newProduct = new Product(discount, iva, pvp);
+			//Product newProduct = new Product(discount, iva, pvp);
 
 			System.out.println("Producto adicionado");
 			productOptions();

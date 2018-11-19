@@ -1,26 +1,17 @@
 package io.altar.jseproject.model;
 
-public class Product {
-
-	private int id;
+public class Product extends Entity{
+	
 	private Shelf[] listShelfs;
 	private double discont;
 	private double iva;
 	private double pvp;
 
-	public Product(double discont, double iva, double pvp) {
+	public Product(double discont, double iva, double pvp) {		
 		this.discont = discont;
 		this.iva = iva;
 		this.pvp = pvp;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	}	
 
 	public Shelf[] getListShelfs() {
 		return listShelfs;
