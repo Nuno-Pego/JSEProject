@@ -45,4 +45,10 @@ public class Product extends Entity{
 		this.pvp = pvp;
 	}
 
+	@Override
+	public String toString() {
+		return "Product "+this.getId() +" [discont=" + discont + ", iva=" + iva + ", pvp=" + pvp + "]";
+	}
+
+	
 }
