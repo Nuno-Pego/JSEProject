@@ -13,7 +13,7 @@ public class TextInterface {
 
 	public void userInterface() {
 
-		System.out.println("Por favor seleccione uma das op√ß√µes:");
+		System.out.println("Por favor seleccione uma das opÁıes:");
 		System.out.println("1) Listar productos");
 		System.out.println("2) Listar prateleiras");
 		System.out.println("3) Sair");
@@ -33,7 +33,7 @@ public class TextInterface {
 			System.out.println("Programa Terminado!");
 			break;
 		default:
-			System.out.println("Erro! Escolha outra op√ß√£o por favor");
+			System.out.println("Erro! Escolha outra opÁ„o por favor");
 			userInterface();
 			break;
 		}
@@ -50,12 +50,12 @@ public class TextInterface {
 			System.out.println(prodIterator.next().toString());
 		}
 
-		System.out.println("Por favor seleccione uma das op√ß√µes:");
+		System.out.println("Por favor seleccione uma das opÁıes:");
 		System.out.println("1) Criar novo producto");
 		System.out.println("2) Editar um produto existente");
 		System.out.println("3) Consultar o detalhe de um produto");
 		System.out.println("4) Remover um produto");
-		System.out.println("5) Voltar ao ecr√£ anterior");
+		System.out.println("5) Voltar ao ecr„ anterior");
 
 		Scanner scan = new Scanner(System.in);
 		String value = scan.nextLine();
@@ -67,7 +67,7 @@ public class TextInterface {
 			System.out.println("Insira Desconto");
 			value = scan.nextLine();
 			while (checkType(value, "Double") == false) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			double discount = Double.parseDouble(value);
@@ -75,7 +75,7 @@ public class TextInterface {
 			System.out.println("Insira IVA");
 			value = scan.nextLine();
 			while (checkType(value, "Double") == false) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			double iva = Double.parseDouble(value);
@@ -83,7 +83,7 @@ public class TextInterface {
 			System.out.println("Insira PVP");
 			value = scan.nextLine();
 			while (checkType(value, "Double") == false) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			double pvp = Double.parseDouble(value);
@@ -99,7 +99,7 @@ public class TextInterface {
 			System.out.println("Insira o ID do produto a editar");
 			value = scan.nextLine();
 			while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			long editID = Long.parseLong(value);
@@ -112,7 +112,7 @@ public class TextInterface {
 
 			} else {
 				while (checkType(value, "Double") == false) {
-					System.out.println("Inv√°lido, tente novamente:");
+					System.out.println("Inv·lido, tente novamente:");
 					value = scan.nextLine();
 				}
 
@@ -127,7 +127,7 @@ public class TextInterface {
 
 			} else {
 				while (checkType(value, "Double") == false) {
-					System.out.println("Inv√°lido, tente novamente:");
+					System.out.println("Inv·lido, tente novamente:");
 					value = scan.nextLine();
 				}
 				Double editIva = Double.parseDouble(value);
@@ -141,7 +141,7 @@ public class TextInterface {
 
 			} else {
 				while (checkType(value, "Double") == false) {
-					System.out.println("Inv√°lido, tente novamente:");
+					System.out.println("Inv·lido, tente novamente:");
 					value = scan.nextLine();
 				}
 				Double editPvp = Double.parseDouble(value);
@@ -155,21 +155,22 @@ public class TextInterface {
 			System.out.println("Insira o ID do produto a consultar");
 			value = scan.nextLine();
 			while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			Long consultID = Long.parseLong(value);
 			oldProduct = prodRep.findById(consultID);
 			System.out.println(oldProduct.toString());
 
-			// productOptions();
+			// productOptions(); 
+			//(fazer tambÈm: se n„o houver produtos para editar remover ou consultar avisar logo)
 
 			break;
 		case 4:
 			System.out.println("Insira o ID do produto a consultar");
 			value = scan.nextLine();
 			while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			Long deleteID = Long.parseLong(value);
@@ -179,7 +180,7 @@ public class TextInterface {
 			String userAnswer = scan.nextLine();
 
 			while (!userAnswer.equals("y")   && !userAnswer.equals("n") ) {
-				System.out.println("Inv√°lido, tente novamente:");
+				System.out.println("Inv·lido, tente novamente:");
 				value = scan.nextLine();
 			}
 			if (userAnswer.equals("y") ) {
@@ -194,7 +195,7 @@ public class TextInterface {
 			userInterface();
 			break;
 		default:
-			System.out.println("Erro! Escolha outra op√ß√£o por favor");
+			System.out.println("Erro! Escolha outra opÁ„o por favor");
 			productOptions();
 			break;
 		}
@@ -207,12 +208,12 @@ public class TextInterface {
 
 	private void shelfOptions() {
 
-		System.out.println("Por favor seleccione uma das op√ß√µes:");
+		System.out.println("Por favor seleccione uma das opÁıes:");
 		System.out.println("1) Criar nova prateleira");
 		System.out.println("2) Editar uma prateleira existente");
 		System.out.println("3) Consultar o detalhe de uma prateleira");
 		System.out.println("4) Remover uma prateleira");
-		System.out.println("5) Voltar ao ecr√£ anterior");
+		System.out.println("5) Voltar ao ecr„ anterior");
 
 		Scanner scan = new Scanner(System.in);
 		String value = scan.nextLine();
@@ -235,7 +236,7 @@ public class TextInterface {
 			userInterface();
 			break;
 		default:
-			System.out.println("Erro! Escolha outra op√ß√£o por favor");
+			System.out.println("Erro! Escolha outra opÁ„o por favor");
 			shelfOptions();
 			break;
 		}
