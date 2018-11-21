@@ -6,9 +6,8 @@ public class Shelf extends Entity {
 	private Product product;
 	private double price;
 
-	public Shelf(int capacity, Product product, double price) {		
-		this.capacity = capacity;
-		this.product = product;
+	public Shelf(int capacity, double price) {		
+		this.capacity = capacity;		
 		this.price = price;
 	}
 
@@ -35,5 +34,12 @@ public class Shelf extends Entity {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
+	@Override
+	public String toString() {
+		return "Shelf "+ this.getId() +" [capacity=" + capacity + ", price=" + price +"$]";
+	}
+	
+	
 
 }

@@ -1,17 +1,17 @@
 package io.altar.jseproject.model;
 
-public class Product extends Entity{
-	
+public class Product extends Entity {
+
 	private Shelf[] listShelfs;
 	private double discont;
 	private double iva;
 	private double pvp;
 
-	public Product(double discont, double iva, double pvp) {		
+	public Product(double discont, double iva, double pvp) {
 		this.discont = discont;
 		this.iva = iva;
 		this.pvp = pvp;
-	}	
+	}
 
 	public Shelf[] getListShelfs() {
 		return listShelfs;
@@ -47,8 +47,8 @@ public class Product extends Entity{
 
 	@Override
 	public String toString() {
-		return "Product "+this.getId() +" [discont=" + discont + ", iva=" + iva + ", pvp=" + pvp + "]";
+		return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp + "$"
+				+ "]";
 	}
 
-	
 }

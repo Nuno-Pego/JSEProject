@@ -16,6 +16,13 @@ public abstract class EntityRepository <T extends Entity>{
 		return currentID++;
 	}
 	
+	public boolean emptyData() {
+		if(baseDeDados.isEmpty())
+			return true;
+		else
+			return false;
+	}
+	
 	public void save(T entity) {
 		entity.setId(currentID);
 		baseDeDados.put(entity.getId(),entity);
@@ -36,5 +43,6 @@ public abstract class EntityRepository <T extends Entity>{
 	
 	public void removeById(Long id) {
 		baseDeDados.remove(id);
-	}
+	}	
+	
 }
