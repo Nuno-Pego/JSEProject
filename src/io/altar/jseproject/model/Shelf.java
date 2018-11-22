@@ -1,16 +1,19 @@
 package io.altar.jseproject.model;
 
 public class Shelf extends Entity {
-	
+
+	// Attributes
 	private int capacity;
 	private Product product;
 	private double price;
 
-	public Shelf(int capacity, double price) {		
-		this.capacity = capacity;		
+	// Constructor
+	public Shelf(int capacity, double price) {
+		this.capacity = capacity;
 		this.price = price;
 	}
 
+	// Getters and Setters
 	public int getCapacity() {
 		return capacity;
 	}
@@ -25,6 +28,7 @@ public class Shelf extends Entity {
 
 	public void setProduct(Product product) {
 		this.product = product;
+		this.product.setListShelfs(this.getId());
 	}
 
 	public double getPrice() {
@@ -35,11 +39,15 @@ public class Shelf extends Entity {
 		this.price = price;
 	}
 
+	// toString
 	@Override
 	public String toString() {
-		return "Shelf "+ this.getId() +" [capacity=" + capacity + ", price=" + price +"$]";
+		if (this.getProduct() == null) {
+			return "Shelf " + this.getId() + " [capacity=" + capacity + ", price=" + price + "$]";
+		} else {
+			return "Shelf " + this.getId() + " [capacity=" + capacity + ", price=" + price + "$" + " | "
+					+ this.getProduct().toString() + "]";
+		}
 	}
-	
-	
 
 }

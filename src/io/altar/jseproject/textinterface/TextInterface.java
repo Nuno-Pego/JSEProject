@@ -9,9 +9,11 @@ import io.altar.jseproject.repositories.ProductRepository;
 import io.altar.jseproject.repositories.ShelfRepository;
 
 public class TextInterface {
+	// Initializing
 	ProductRepository prodRep = ProductRepository.getInstance();
 	ShelfRepository shelfRep = ShelfRepository.getInstance();
 
+	// MAIN INTERFACE
 	public void userInterface() {
 
 		System.out.println("Por favor seleccione uma das opcoes:");
@@ -42,7 +44,7 @@ public class TextInterface {
 		scan.close();
 	}
 
-	// ---------------------------------------------------------------------------------------
+	// PRODUCTS INTERFACE
 	private void productOptions() {
 
 		Iterator<Product> prodIterator = prodRep.findAll();
@@ -92,9 +94,29 @@ public class TextInterface {
 
 			Product newProduct = new Product(discount, iva, pvp);
 			prodRep.save(newProduct);
-
 			System.out.println("Producto adicionado");
-			productOptions();
+
+			if (shelfRep.emptyData() == true) {
+				productOptions();
+			} else {
+				System.out.println("");
+				System.out.println("Quer adicionar o produto a alguma prateleira?");
+				System.out.println("Escolha o ID da prateleira ou pressione Enter para ignorar");
+				value = scan.nextLine();
+				while ((checkType(value, "Long") == false && !value.equals("")
+						&& checkIdExistenceProducts(value) == false)) {
+					System.out.println("Invalido, tente novamente:");
+					value = scan.nextLine();
+				}
+				if (value.equals("")) {
+					productOptions();
+				} else {
+					Long consultId = Long.parseLong(value);
+					// newProduct.setShelf(shelfRep.findById(consultId));
+					System.out.println("Prateleira atribuida");
+					shelfOptions();
+				}
+			}
 
 			break;
 		case 2:
@@ -104,7 +126,7 @@ public class TextInterface {
 			} else {
 				System.out.println("Insira o ID do produto a editar");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
+				while (checkType(value, "Long") == false || checkIdExistenceProducts(value) == false) {
 					System.out.println("Invalido, tente novamente:");
 					value = scan.nextLine();
 				}
@@ -164,7 +186,7 @@ public class TextInterface {
 			} else {
 				System.out.println("Insira o ID do produto a consultar");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
+				while (checkType(value, "Long") == false || checkIdExistenceProducts(value) == false) {
 					System.out.println("Invalido, tente novamente:");
 					value = scan.nextLine();
 				}
@@ -189,7 +211,7 @@ public class TextInterface {
 			} else {
 				System.out.println("Insira o ID do produto a eliminar");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
+				while (checkType(value, "Long") == false || checkIdExistenceProducts(value) == false) {
 					System.out.println("Invalido, tente novamente:");
 					value = scan.nextLine();
 				}
@@ -225,7 +247,7 @@ public class TextInterface {
 
 	}
 
-	// ---------------------------------------------------------------------------------------
+	// SHELF INTERFACE
 
 	private void shelfOptions() {
 		Iterator<Shelf> shefIterator = shelfRep.findAll();
@@ -267,7 +289,27 @@ public class TextInterface {
 			Shelf newShelf = new Shelf(capacity, price);
 			shelfRep.save(newShelf);
 			System.out.println("Prateleira adicionada");
-			shelfOptions();
+			if (prodRep.emptyData() == true) {
+				shelfOptions();
+			} else {
+				System.out.println("");
+				System.out.println("Quer atribuir um produto a prateleira?");
+				System.out.println("Escolha o ID do produto ou pressione Enter para ignorar");
+				value = scan.nextLine();
+				while ((checkType(value, "Long") == false && !value.equals("")
+						&& checkIdExistenceShelfs(value) == false)) {
+					System.out.println("Invalido, tente novamente:");
+					value = scan.nextLine();
+				}
+				if (value.equals("")) {
+					shelfOptions();
+				} else {
+					Long consultId = Long.parseLong(value);
+					newShelf.setProduct(prodRep.findById(consultId));
+					System.out.println("Produto adicionado");
+					shelfOptions();
+				}
+			}
 
 			break;
 		case 2:
@@ -277,7 +319,7 @@ public class TextInterface {
 			} else {
 				System.out.println("Insira o ID da prateleira a editar");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
+				while (checkType(value, "Long") == false || checkIdExistenceShelfs(value) == false) {
 					System.out.println("Invalido, tente novamente:");
 					value = scan.nextLine();
 				}
@@ -324,7 +366,7 @@ public class TextInterface {
 			} else {
 				System.out.println("Insira o ID da prateleira a consultar");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
+				while (checkType(value, "Long") == false || checkIdExistenceShelfs(value) == false) {
 					System.out.println("Invalido, tente novamente:");
 					value = scan.nextLine();
 				}
@@ -349,7 +391,7 @@ public class TextInterface {
 			} else {
 				System.out.println("Insira o ID do produto a eliminar");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistence(value) == false) {
+				while (checkType(value, "Long") == false || checkIdExistenceShelfs(value) == false) {
 					System.out.println("Invalido, tente novamente:");
 					value = scan.nextLine();
 				}
@@ -384,11 +426,20 @@ public class TextInterface {
 		scan.close();
 	}
 
-	// ---------------------------------------------------------------------------------------
-	// ---------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------------------------
 
-	private boolean checkIdExistence(String id) {
-		if (prodRep.findById(Long.parseLong(id)) != null || shelfRep.findById(Long.parseLong(id)) != null)
+	// Methods
+	private boolean checkIdExistenceProducts(String id) {
+		if (prodRep.findById(Long.parseLong(id)) != null)
+			return true;
+		else {
+			return false;
+		}
+
+	}
+
+	private boolean checkIdExistenceShelfs(String id) {
+		if (shelfRep.findById(Long.parseLong(id)) != null)
 			return true;
 		else {
 			return false;

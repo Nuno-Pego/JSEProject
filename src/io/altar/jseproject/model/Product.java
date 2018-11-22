@@ -1,24 +1,32 @@
 package io.altar.jseproject.model;
 
+import java.util.ArrayList;
+
 public class Product extends Entity {
 
-	private Shelf[] listShelfs;
+	// Attributes
+	private ArrayList<Long> listShelfs;
 	private double discont;
 	private double iva;
 	private double pvp;
 
+	// Constructor
 	public Product(double discont, double iva, double pvp) {
+		this.listShelfs = new ArrayList<Long>();
 		this.discont = discont;
 		this.iva = iva;
 		this.pvp = pvp;
+
 	}
 
-	public Shelf[] getListShelfs() {
+	// Getters and Setters
+
+	public ArrayList<Long> getListShelfs() {
 		return listShelfs;
 	}
 
-	public void setListShelfs(Shelf[] listShelfs) {
-		this.listShelfs = listShelfs;
+	public void setListShelfs(Long id) {
+		this.listShelfs.add(id);
 	}
 
 	public double getDiscont() {
@@ -45,10 +53,18 @@ public class Product extends Entity {
 		this.pvp = pvp;
 	}
 
+	// toString
 	@Override
 	public String toString() {
-		return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp + "$"
-				+ "]";
+
+		if (listShelfs == null) {
+			return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp
+					+ "$" + "]";
+		} else {
+
+			return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp
+					+ "$ " + this.listShelfs.toString() + "]";
+		}
 	}
 
 }
