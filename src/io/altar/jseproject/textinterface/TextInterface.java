@@ -19,6 +19,8 @@ public class TextInterface {
 	// Attributes
 	String value;
 	int userChoice;
+	long inputID;
+	String userConfirmation;
 
 	// MAIN INTERFACE
 	public void userInterface() {
@@ -59,8 +61,7 @@ public class TextInterface {
 		// Attributes
 		double discount;
 		double iva;
-		double pvp;
-		long inputID;
+		double pvp;		
 
 		System.out.println("");
 		while (prodIterator.hasNext()) {
@@ -94,8 +95,9 @@ public class TextInterface {
 			pvp = Double.parseDouble(invalidInput(value, "Double"));
 
 			Product newProduct = new Product(discount, iva, pvp);
-			prodRep.save(newProduct);
+			prodRep.save(newProduct);		
 			System.out.println("Product added");
+/////////// Shelf to Product				
 			productOptions();
 			break;
 		case 2:
@@ -106,15 +108,17 @@ public class TextInterface {
 			} else {
 				System.out.println("Product ID?");
 				value = scan.nextLine();				
-/////////////////////////////				
-				do{
-				value=invalidInput(value,"Long");				
-				}while(checkIdExistenceProducts(value)==false);
-				
+
+				value=invalidInput(value,"Long");
+				while(checkIdExistenceProducts(value)==false) {					
+					value = scan.nextLine();
+					value=invalidInput(value,"Long");					
+				}
+
 				inputID = Long.parseLong(value);
 				Product oldProduct = prodRep.findById(inputID);
-				
-				System.out.println("New Discount " + "{" + oldProduct.getDiscont() + "}");
+
+				System.out.println("New Discount " + "{" + oldProduct.getDiscont() + "%}");
 				value = scan.nextLine();
 				if (value.equals("")) {
 				} else {				
@@ -122,22 +126,22 @@ public class TextInterface {
 					oldProduct.setDiscont(discount);
 				}
 
-				System.out.println("New IVA " + "{" + oldProduct.getIva() + "}");
+				System.out.println("New IVA " + "{" + oldProduct.getIva() + "%}");
 				value = scan.nextLine();
 				if (value.equals("")) {
 				} else {				
 					iva = Double.parseDouble(invalidInput(value, "Double"));
 					oldProduct.setIva(iva);
 				}					
-				
-				System.out.println("New PVP " + oldProduct.getPvp());
+
+				System.out.println("New PVP " + "{" + oldProduct.getPvp() + "$}");
 				value = scan.nextLine();
 				if (value.equals("")) {
 				} else {				
 					pvp = Double.parseDouble(invalidInput(value, "Double"));
 					oldProduct.setPvp(pvp);
 				}	
-				
+/////////// Edit Shelf
 				System.out.println("Product Edited");
 				productOptions();
 			}
@@ -147,52 +151,56 @@ public class TextInterface {
 				System.out.println("No product");
 				productOptions();
 			} else {
-				System.out.println("product ID?");
-				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistenceProducts(value) == false) {
-					System.out.println("Invalid, try again:");
+				System.out.println("Product ID?");
+				value = scan.nextLine();				
+
+				value=invalidInput(value,"Long");
+				while(checkIdExistenceProducts(value)==false) {					
 					value = scan.nextLine();
+					value=invalidInput(value,"Long");
 				}
-				Long consultID = Long.parseLong(value);
-				Product oldProduct = prodRep.findById(consultID);
+
+				inputID = Long.parseLong(value);
+				Product oldProduct = prodRep.findById(inputID);
+
 				System.out.println(oldProduct.toString());
 				System.out.println("");
 				System.out.println("Press Enter to back");
-				value = scan.next();
-				while (!value.equals("")) {
-					value = scan.nextLine();
-				}
-				if (value.equals("")) {
-					productOptions();
-				}
+				value = scan.nextLine();
+
+				productOptions();	
 			}
+
 			break;
 		case 4:
 			if (prodRep.emptyData() == true) {
 				System.out.println("No product");
 				productOptions();
 			} else {
-				System.out.println("Product ID");
-				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistenceProducts(value) == false) {
-					System.out.println("Invalid, try again:");
+				System.out.println("Product ID?");
+				value = scan.nextLine();				
+
+				value=invalidInput(value,"Long");
+				while(checkIdExistenceProducts(value)==false) {				
 					value = scan.nextLine();
+					value=invalidInput(value,"Long");					
 				}
-				Long deleteID = Long.parseLong(value);
-				Product oldProduct = prodRep.findById(deleteID);
+				inputID = Long.parseLong(value);
+				Product oldProduct = prodRep.findById(inputID);
+
 				System.out.println("Are you sure, you want to delete this product? " + oldProduct.toString());
 				System.out.println("y/n");
-				String userAnswer = scan.nextLine();
+				userConfirmation = scan.nextLine();
 
-				while (!userAnswer.equals("y") && !userAnswer.equals("n")) {
+				while (!userConfirmation.equals("y") && !userConfirmation.equals("n")) {
 					System.out.println("Invalid, try again:");
-					userAnswer = scan.nextLine();
+					userConfirmation = scan.nextLine();
 				}
-				if (userAnswer.equals("y")) {
-					prodRep.removeById(deleteID);
+				if (userConfirmation.equals("y")) {
+					prodRep.removeById(inputID);
 					System.out.println("Product deleted");
 					productOptions();
-				} else if (userAnswer.equals("n")) {
+				} else if (userConfirmation.equals("n")) {
 					productOptions();
 				}
 			}
@@ -206,14 +214,17 @@ public class TextInterface {
 			break;
 		}
 
-		scan.close();
-
 	}
 
 	// SHELF INTERFACE
 
 	private void shelfOptions() {
+		// Initializing
 		Iterator<Shelf> shefIterator = shelfRep.findAll();
+		//Attributes
+		int capacity;
+		double price;
+
 		System.out.println("");
 		while (shefIterator.hasNext()) {
 			System.out.println(shefIterator.next().toString());
@@ -227,48 +238,48 @@ public class TextInterface {
 		System.out.println("4) Delete shelf");
 		System.out.println("5) Back");
 
-		Scanner scan = new Scanner(System.in);
-		String value = scan.nextLine();
-		int userChoice = checkType(value, "Int") ? Integer.parseInt(value) : 10;
+
+		value = scan.nextLine();
+		userChoice = checkType(value, "Int") ? Integer.parseInt(value) : 10;
 
 		switch (userChoice) {
 		case 1:
-			System.out.println("Input Capacity (nº)");
-			value = scan.nextLine();
-			while (checkType(value, "Int") == false) {
-				System.out.println("Invalid, try again:");
-				value = scan.nextLine();
-			}
-			int capacity = Integer.parseInt(value);
+			System.out.println("Input Capacity (Number)");
+			value = scan.nextLine();			
+			capacity = Integer.parseInt(invalidInput(value, "Int"));
 
 			System.out.println("Input renting price ($/day)");
-			value = scan.nextLine();
-			while (checkType(value, "Double") == false) {
-				System.out.println("Invalid, try again:");
-				value = scan.nextLine();
-			}
-			double price = Double.parseDouble(value);
+			value = scan.nextLine();			
+			price =Double.parseDouble(invalidInput(value, "Double"));
 
 			Shelf newShelf = new Shelf(capacity, price);
 			shelfRep.save(newShelf);
 			System.out.println("Shelf added");
-			if (prodRep.emptyData() == true) {
+
+			if (prodRep.emptyData() == true) {				
 				shelfOptions();
 			} else {
 				System.out.println("");
 				System.out.println("Add product to a shelf?");
 				System.out.println("Choose product ID or press Enter to ignore");
 				value = scan.nextLine();
-				while ((checkType(value, "Long") == false && !value.equals("")
-						&& checkIdExistenceShelfs(value) == false)) {
-					System.out.println("Invalid, try again:");
-					value = scan.nextLine();
+
+				if(!value.equals("")) {
+					value=invalidInputEnter(value,"Long");
+					while(!value.equals("") && checkIdExistenceProducts(value)==false) {						
+						value = scan.nextLine();
+						if(!value.equals("")) {
+							value=invalidInputEnter(value,"Long");
+						}else {
+							break;
+						}
+					}
 				}
 				if (value.equals("")) {
 					shelfOptions();
 				} else {
-					Long consultId = Long.parseLong(value);
-					newShelf.setProduct(prodRep.findById(consultId));
+					inputID = Long.parseLong(value);
+					newShelf.setProduct(prodRep.findById(inputID));
 					System.out.println("Product added");
 					shelfOptions();
 				}
@@ -281,43 +292,32 @@ public class TextInterface {
 				shelfOptions();
 			} else {
 				System.out.println("Shelf ID?");
-				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistenceShelfs(value) == false) {
-					System.out.println("Invalid, try again:");
+				value = scan.nextLine();			
+				value=invalidInput(value,"Long");
+				while(checkIdExistenceShelfs(value)==false) {					
 					value = scan.nextLine();
+					value=invalidInput(value,"Long");					
 				}
-				long editID = Long.parseLong(value);
 
-				Shelf oldShelf = shelfRep.findById(editID);
+				inputID = Long.parseLong(value);				
+				Shelf oldShelf = shelfRep.findById(inputID);
 
-				System.out.println("New Capacity " + oldShelf.getCapacity());
+				System.out.println("New Capacity " + "{" +oldShelf.getCapacity()+"}");					
 				value = scan.nextLine();
 				if (value.equals("")) {
-
 				} else {
-					while (checkType(value, "Int") == false) {
-						System.out.println("Invalid, try again:");
-						value = scan.nextLine();
-					}
-
-					int editCapacity = Integer.parseInt(value);
-					oldShelf.setCapacity(editCapacity);
-
+					capacity = Integer.parseInt(invalidInput(value, "Int"));
+					oldShelf.setCapacity(capacity);
 				}
 
 				System.out.println("New renting price " + oldShelf.getPrice());
 				value = scan.nextLine();
 				if (value.equals("")) {
-
 				} else {
-					while (checkType(value, "Double") == false) {
-						System.out.println("Invalid, try again:");
-						value = scan.nextLine();
-					}
-					Double editPrice = Double.parseDouble(value);
-					oldShelf.setPrice(editPrice);
+					price = Double.parseDouble(invalidInput(value, "Double"));
+					oldShelf.setPrice(price);
 				}
-
+/////////// Edit Product
 				System.out.println("Shelf edited");
 				shelfOptions();
 			}
@@ -329,22 +329,19 @@ public class TextInterface {
 			} else {
 				System.out.println("Shelf ID?");
 				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistenceShelfs(value) == false) {
-					System.out.println("Invalid, try again:");
+				value=invalidInput(value,"Long");
+				while(checkIdExistenceShelfs(value)==false) {					
 					value = scan.nextLine();
+					value=invalidInput(value,"Long");					
 				}
-				Long consultID = Long.parseLong(value);
-				Shelf oldShelf = shelfRep.findById(consultID);
+				inputID = Long.parseLong(value);
+				Shelf oldShelf = shelfRep.findById(inputID);
 				System.out.println(oldShelf.toString());
 				System.out.println("");
-				System.out.println("Press Enter to back");
-				value = scan.next();
-				while (!value.equals("")) {
-					value = scan.nextLine();
-				}
-				if (value.equals("")) {
-					shelfOptions();
-				}
+				System.out.println("Press Enter to back");				
+				value = scan.nextLine();
+
+				productOptions();
 			}
 			break;
 		case 4:
@@ -352,27 +349,30 @@ public class TextInterface {
 				System.out.println("No shelfs");
 				shelfOptions();
 			} else {
-				System.out.println("Product ID?");
-				value = scan.nextLine();
-				while (checkType(value, "Long") == false || checkIdExistenceShelfs(value) == false) {
-					System.out.println("Invalid, try again:");
+				System.out.println("Shelf ID?");
+				value = scan.nextLine();			
+				value=invalidInput(value,"Long");
+				while(checkIdExistenceShelfs(value)==false) {
 					value = scan.nextLine();
+					value=invalidInput(value,"Long");					
 				}
-				Long deleteID = Long.parseLong(value);
-				Shelf oldShelf = shelfRep.findById(deleteID);
+
+				inputID = Long.parseLong(value);
+				Shelf oldShelf = shelfRep.findById(inputID);
+				
 				System.out.println("Are you sure, you want to delete this shelf? " + oldShelf.toString());
 				System.out.println("y/n");
-				String userAnswer = scan.nextLine();
+				userConfirmation = scan.nextLine();
 
-				while (!userAnswer.equals("y") && !userAnswer.equals("n")) {
+				while (!userConfirmation.equals("y") && !userConfirmation.equals("n")) {
 					System.out.println("Invalid, try again:");
-					userAnswer = scan.nextLine();
+					userConfirmation = scan.nextLine();
 				}
-				if (userAnswer.equals("y")) {
-					shelfRep.removeById(deleteID);
+				if (userConfirmation.equals("y")) {
+					shelfRep.removeById(inputID);
 					System.out.println("Shelf deleted");
 					shelfOptions();
-				} else if (userAnswer.equals("n")) {
+				} else if (userConfirmation.equals("n")) {
 					shelfOptions();
 				}
 			}
@@ -396,6 +396,7 @@ public class TextInterface {
 		if (prodRep.findById(Long.parseLong(id)) != null)
 			return true;
 		else {
+			System.out.println("ID dont exists, try again:");
 			return false;
 		}
 
@@ -405,14 +406,22 @@ public class TextInterface {
 		if (shelfRep.findById(Long.parseLong(id)) != null)
 			return true;
 		else {
-			System.out.println("This ID dont exists");
+			System.out.println("ID dont exists, try again:");
 			return false;
 		}
 
-	}
+	}	
 
 	private String invalidInput(String value, String match) {
 		while (checkType(value, match) == false) {
+			System.out.println("Invalid, try again:");
+			value = scan.nextLine();
+		}
+		return value;
+	}
+
+	private String invalidInputEnter(String value, String match) {
+		while (!value.equals("") && checkType(value, match) == false) {
 			System.out.println("Invalid, try again:");
 			value = scan.nextLine();
 		}
