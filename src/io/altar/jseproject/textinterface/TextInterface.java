@@ -451,5 +451,10 @@ public class TextInterface {
 		}
 		return true;
 	}
+	
+//	private <T extends Number> T checkType(String value, Function<String, T> operation) {
+//		return operation.apply(value);
+//	}
+
 
 }
