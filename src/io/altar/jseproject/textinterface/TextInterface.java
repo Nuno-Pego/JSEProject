@@ -10,7 +10,7 @@ import io.altar.jseproject.repositories.ShelfRepository;
 
 public class TextInterface {
 
-	// Initializing
+	// Initializing  
 	ProductRepository prodRep = ProductRepository.getInstance();
 	ShelfRepository shelfRep = ShelfRepository.getInstance();
 
