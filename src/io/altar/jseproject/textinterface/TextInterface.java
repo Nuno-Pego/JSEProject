@@ -199,35 +199,9 @@ public class TextInterface {
 			Shelf newShelf = new Shelf(capacity, price);
 			shelfRep.save(newShelf);
 			System.out.println("Shelf added");
-
-			if (prodRep.emptyData() == true) {
-				shelfOptions();
-			} else {
-				System.out.println("");
-				System.out.println("Add product to a shelf?");
-				System.out.println("Choose product ID or press Enter to ignore");
-				value = scan.nextLine();
-
-				if (!value.equals("")) {
-					value = invalidInputEnter(value, "Long");
-					while (!value.equals("") && checkIdExistenceProducts(value) == false) {
-						value = scan.nextLine();
-						if (!value.equals("")) {
-							value = invalidInputEnter(value, "Long");
-						} else {
-							break;
-						}
-					}
-				}
-				if (value.equals("")) {
-					shelfOptions();
-				} else {
-					inputID = Long.parseLong(value);
-					newShelf.setProduct(prodRep.findById(inputID));
-					System.out.println("Product added");
-					shelfOptions();
-				}
-			}
+			
+			addProductToShelf(newShelf);
+			
 			break;
 		case 2:		
 				oldShelf = shelfRep.findById(validIdShef());
@@ -278,8 +252,39 @@ public class TextInterface {
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------------------
-
+	// ---------------------------------------------------------------------------------------------------------------------------------	
 	// Methods
+	
+	private void addProductToShelf(Shelf newShelf) {
+		if (prodRep.emptyData() == true) {
+			shelfOptions();
+		} else {
+			System.out.println("");
+			System.out.println("Add product to a shelf?");
+			System.out.println("Choose product ID or press Enter to ignore");
+			value = scan.nextLine();
+
+			if (!value.equals("")) {
+				value = invalidInputEnter(value, "Long");
+				while (!value.equals("") && checkIdExistenceProducts(value) == false) {
+					value = scan.nextLine();
+					if (!value.equals("")) {
+						value = invalidInputEnter(value, "Long");
+					} else {
+						break;
+					}
+				}
+			}
+			if (value.equals("")) {
+				shelfOptions();
+			} else {
+				inputID = Long.parseLong(value);
+				newShelf.setProduct(prodRep.findById(inputID));
+				System.out.println("Product added");
+				shelfOptions();
+			}
+		}
+	}
 
 	private long validIdProduct() {
 		if (prodRep.emptyData() == true) {
