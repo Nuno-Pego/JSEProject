@@ -1,5 +1,7 @@
 package io.altar.jseproject.model;
 
+import io.altar.jseproject.services.ProductService;
+
 public class Shelf extends Entity {
 
 	// Attributes
@@ -9,6 +11,12 @@ public class Shelf extends Entity {
 
 	// Constructor
 	public Shelf(int capacity, double price) {
+		this.capacity = capacity;
+		this.price = price;
+	}
+	
+	public Shelf(Long id, int capacity, double price) {
+		this.product = ProductService.getProductById(id);
 		this.capacity = capacity;
 		this.price = price;
 	}

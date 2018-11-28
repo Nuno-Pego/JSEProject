@@ -23,6 +23,10 @@ public abstract class EntityRepository<T extends Entity> {
 			return true;
 		else
 			return false;
+	}	
+	
+	public int lengthData() {
+		return data.size();
 	}
 
 	public void save(T entity) {
@@ -33,6 +37,10 @@ public abstract class EntityRepository<T extends Entity> {
 
 	public Iterator<T> findAll() {
 		return data.values().iterator();
+	}
+	
+	public Iterator<Long> getAllIDs(){
+		return data.keySet().iterator();
 	}
 
 	public T findById(Long id) {
