@@ -1,5 +1,6 @@
 package io.altar.jseproject.services;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.altar.jseproject.model.Shelf;
@@ -41,8 +42,8 @@ private static final ShelfRepository SHELFREPOSITORY = ShelfRepository.getInstan
 		return SHELFREPOSITORY.getAllIDs();
 	}
 	
-	public static int lengthShelfs() {
-		return SHELFREPOSITORY.lengthData();
+	public static ArrayList<Long> getAllShelfsIDsWithoutProduct() {
+		return SHELFREPOSITORY.getIDsWithoutProduct();
 	}
 	
 	public static void removeShelf(long id) {

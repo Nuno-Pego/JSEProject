@@ -17,7 +17,7 @@ public class Simulator {
 				break;
 			}
 			stateMachine.setCurrentState(
-					stateMachine.getTransitionsStates()[stateMachine.getCurrentState()][userAnswer - 1]);
+					stateMachine.getTransitionsStates()[stateMachine.getCurrentState()][userAnswer-1]);
 		}
 	}
 }

@@ -39,11 +39,7 @@ public class ProductService {
 
 	public static Iterator<Long> getAllProductsIDs(){
 		return PRODUCTREPOSITORY.getAllIDs();
-	}
-	
-	public static int lengthProducts() {
-		return PRODUCTREPOSITORY.lengthData();
-	}
+	}	
 	
 	public static void removeProduct(long id) {
 		PRODUCTREPOSITORY.removeById(id);

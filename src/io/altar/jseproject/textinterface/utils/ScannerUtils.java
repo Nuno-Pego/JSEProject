@@ -1,5 +1,6 @@
 package io.altar.jseproject.textinterface.utils;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ScannerUtils {
@@ -38,6 +39,34 @@ public class ScannerUtils {
 
 	public double checkGetDoubleFromScanner(String message) {
 		return checkGetDoubleFromScanner(message, false);
+	}
+	
+	public String checkGetStringFromScanner(String message) {
+		String userInput;
+
+		do {
+			System.out.println(message);
+			userInput = scanner.nextLine();
+			
+		} while (!userInput.equals("y") && !userInput.equals("n"));
+		return userInput;
+	}	
+	
+	public long checkGetLongFromScanner(String message, boolean canBeNull) {
+		String userInput;
+
+		do {
+			System.out.println(message);
+			userInput = scanner.nextLine();
+			if (canBeNull && userInput.equals("")) {
+				return -1;
+			}
+		} while (!isType(userInput, "Long"));
+		return Long.parseLong(userInput);
+	}
+
+	public long checkGetLongFromScanner(String message) {
+		return checkGetLongFromScanner(message, false);
 	}
 
 	public int checkGetIntFromScannerWithMax(String message, int max, boolean canBeNull) {
@@ -83,6 +112,35 @@ public class ScannerUtils {
 	public int checkGetIntFromScannerWithRange(String message, int[] rangeValidValues) {
 		return checkGetIntFromScannerWithRange(message, rangeValidValues, false);
 	}
+	
+	public long checkGetLongFromScannerWithRange(String message, ArrayList<Long> rangeValidValues, boolean canBeNull) {
+		long value;
+		boolean validValue = false;
+		do {
+			value = checkGetLongFromScanner(message, canBeNull);
+			if (canBeNull && value == -1) {
+				return value;
+			} else {
+				for (long i : rangeValidValues) {
+					if (value == i) {
+						validValue = true;
+					}
+				}
+				if (!validValue) {
+					String validValuesShow = "";
+					for (long i : rangeValidValues) {
+						validValuesShow += " " + i;
+					}
+					System.out.println(":The number must be on of this: " + validValuesShow);
+				}
+			}
+		} while (!validValue);
+		return value;
+	}
+	
+	public long checkGetLongFromScannerWithRange(String message, ArrayList<Long> rangeValidValues) {
+		return checkGetLongFromScannerWithRange(message, rangeValidValues, false);
+	}
 
 	public boolean isType(String input, String match) {
 		Scanner checkScanner = new Scanner(input);
@@ -111,7 +169,7 @@ public class ScannerUtils {
 			} else {
 				System.out.println("Invalid number");
 			}
-			break;
+			break;			
 		default:
 			answer = true;
 		}

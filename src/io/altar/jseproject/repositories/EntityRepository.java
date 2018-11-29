@@ -23,11 +23,7 @@ public abstract class EntityRepository<T extends Entity> {
 			return true;
 		else
 			return false;
-	}	
-	
-	public int lengthData() {
-		return data.size();
-	}
+	}		
 
 	public void save(T entity) {
 		entity.setId(currentID);
