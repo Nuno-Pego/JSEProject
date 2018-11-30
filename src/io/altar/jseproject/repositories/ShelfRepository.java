@@ -22,8 +22,9 @@ public class ShelfRepository extends EntityRepository<Shelf> {
 		ArrayList<Long> allShelfsWithoutProduct = new ArrayList<Long>();
 		
 		while(allShelfs.hasNext()) {
-			if(allShelfs.next().getProduct()==null) {
-				allShelfsWithoutProduct.add(allShelfs.next().getId());
+			Shelf checkShelf = allShelfs.next();
+			if(checkShelf.getProduct()==null) {
+				allShelfsWithoutProduct.add(checkShelf.getId());
 			}
 		}		
 		return allShelfsWithoutProduct;

@@ -7,19 +7,19 @@ import io.altar.jseproject.services.ShelfService;
 
 public class CreateProductMenu implements State {
 
-	int discount, iva;	
+	int discount, iva;
 	double pvp;
-	
+
 	@Override
 	public int execute() {
 
-		showMenu();
+		showMenu();		
 
 		return 1;
 	}
 
 	public void showMenu() {
-		
+
 		int[] rangeIvas = { 6, 12, 23 };
 
 		discount = SCANNERUTILS.checkGetIntFromScannerWithMax("Input Discount (%)", 100);
@@ -28,10 +28,11 @@ public class CreateProductMenu implements State {
 
 		if (!ShelfService.getAllShelfsIDsWithoutProduct().isEmpty()) {
 
-			String userAnswer = SCANNERUTILS.checkGetStringFromScanner("Do you want to add to a Shelf?");
+			String userAnswer = SCANNERUTILS.checkGetStringFromScanner("Do you want to add to a Shelf? (y/n)");
 
 			if (userAnswer.equals("y")) {
 				addToShelf();
+
 			} else {
 				ProductService.createProduct(discount, iva, pvp);
 			}
@@ -42,12 +43,23 @@ public class CreateProductMenu implements State {
 
 	public void addToShelf() {
 		ArrayList<Long> rageShelfsIDs = ShelfService.getAllShelfsIDsWithoutProduct();
-		 
+		ArrayList<Long> shelfsIDs = new ArrayList<Long>();
 		long id;
 		do {
 			id = SCANNERUTILS.checkGetLongFromScannerWithRange("Input Shelf ID (Press Enter to ignore)", rageShelfsIDs,
-					true);			
+					true);
+			if(id!=-1) {
 			rageShelfsIDs.remove(rageShelfsIDs.indexOf(id));
-		} while (id != -1 || !rageShelfsIDs.isEmpty());		
+			shelfsIDs.add(id);			
+			}
+		} while (id != -1 && !rageShelfsIDs.isEmpty());
+
+		ProductService.createProduct(shelfsIDs, discount, iva, pvp);
+		
+		for (int i = 0; i < shelfsIDs.size(); i++) {
+			long IdShelf = shelfsIDs.get(i);
+			
+			ShelfService.addProductToShelf(ShelfService.getShelfById(IdShelf), ProductService.getCurrentID());
+		}
 	}
 }

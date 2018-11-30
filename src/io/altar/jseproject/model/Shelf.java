@@ -36,6 +36,10 @@ public class Shelf extends Entity {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	public void setProductWithShelf(Product product) {
+		this.product = product;
 		this.product.setListShelfs(this.getId());
 	}
 

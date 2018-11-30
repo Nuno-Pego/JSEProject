@@ -14,9 +14,13 @@ public abstract class EntityRepository<T extends Entity> {
 	private long currentID = 0;
 
 	// Methods
-	private long nextID() {
-		return currentID++;
+	public long currentID() {
+		return currentID;
 	}
+	
+	public long nextID() {
+		return currentID++;
+	}	
 
 	public boolean emptyData() {
 		if (data.isEmpty())

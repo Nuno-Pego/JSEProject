@@ -59,7 +59,7 @@ public class Product extends Entity {
 
 	public void setPvp(double pvp) {
 		this.pvp = pvp;
-	}
+	}	
 
 	// toString
 	@Override
@@ -71,7 +71,7 @@ public class Product extends Entity {
 		} else {
 
 			return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp
-					+ "$ " + this.listShelfs.toString() + "]";
+					+ "$ " + getListShelfs().toString() + "]";
 		}
 	}
 
