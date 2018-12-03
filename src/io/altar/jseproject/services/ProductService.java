@@ -2,50 +2,69 @@ package io.altar.jseproject.services;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.repositories.ProductRepository;
 
 public class ProductService {
-
-	private static final ProductRepository PRODUCTREPOSITORY = ProductRepository.getInstance();
-
-	public static void createProduct(int discount, int iva, double pvp) {
+	
+	// Initializing;
+	private static final ProductRepository PRODUCT_REPOSITORY = ProductRepository.getInstance();
+	
+	// Create a product
+	public static void createProduct (int discount, int iva, double pvp){
 		Product newProduct = new Product(discount, iva, pvp);
-		PRODUCTREPOSITORY.save(newProduct);
-	}
-
-	public static void createProduct(ArrayList<Long> ShelfsIDs, int discount, int iva, double pvp) {
-		Product newProduct = new Product(ShelfsIDs, discount, iva, pvp);
-		PRODUCTREPOSITORY.save(newProduct);
+		PRODUCT_REPOSITORY.save(newProduct);
 	}
 	
-	public static long getCurrentID() {
-		return PRODUCTREPOSITORY.currentID();
+	public static void createProduct (ArrayList<Long> shelfsIDs, int discount, int iva, double pvp){
+		Product newProduct = new Product(shelfsIDs, discount, iva, pvp);
+		PRODUCT_REPOSITORY.save(newProduct);
 	}
-
-	public static Product getProductById(Long id) {
-		Product searchProduct = PRODUCTREPOSITORY.findById(id);
+	
+	// Get size of Data
+	public static int getSizeOfData(){
+		return PRODUCT_REPOSITORY.lenghtData();				
+	}
+	
+	// Get actual product ID
+	public static long getActualID(){
+		return PRODUCT_REPOSITORY.getActualID();
+	}
+		
+	// Get next product ID
+	public static long getNextID(){
+		return PRODUCT_REPOSITORY.nextID();
+	}
+	
+	// Get Product by ID
+	public static Product getProductById (long id){
+		Product searchProduct = PRODUCT_REPOSITORY.findByID(id);
 		return searchProduct;
-	}	
-
-	public static void editProduct(Product editProduct) {
-		PRODUCTREPOSITORY.save(editProduct);
+	}
+	
+	// Get All Products
+	public static Iterator<Product> getAllProducts(){
+		return PRODUCT_REPOSITORY.getAll();
+	}
+	
+	// Get All Product ID's
+	public static Iterator<Long> getAllProductsIDs(){
+		return PRODUCT_REPOSITORY.getAllIDs();
+	}
+	
+	// Edit Product
+	public static void editProduct (Product editProduct){
+		PRODUCT_REPOSITORY.save(editProduct);
+	}
+	
+	// Remove Product
+	public static void removeProduct (long idToRemove){
+		PRODUCT_REPOSITORY.removeByID(idToRemove);
+	}
+	
+	// Check Repository is Empty
+	public static boolean isEmpty(){
+		return PRODUCT_REPOSITORY.isEmpty();
 	}
 
-	public static boolean isEmpty() {
-		return PRODUCTREPOSITORY.emptyData();
-	}
-
-	public static Iterator<Product> getAllProducts() {
-		return PRODUCTREPOSITORY.findAll();
-	}
-
-	public static Iterator<Long> getAllProductsIDs() {
-		return PRODUCTREPOSITORY.getAllIDs();
-	}
-
-	public static void removeProduct(long id) {
-		PRODUCTREPOSITORY.removeById(id);
-	}
 }

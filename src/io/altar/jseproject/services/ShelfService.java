@@ -8,48 +8,65 @@ import io.altar.jseproject.repositories.ShelfRepository;
 
 public class ShelfService {
 
-	private static final ShelfRepository SHELFREPOSITORY = ShelfRepository.getInstance();
-
-	public static void createShelf(int capacity, double price) {
-		Shelf newShelf = new Shelf(capacity, price);
-		SHELFREPOSITORY.save(newShelf);
-	}
-
-	public static void createShelf(Long productIDs, int capacity, double price) {
-		Shelf newShelf = new Shelf(productIDs, capacity, price);
-		SHELFREPOSITORY.save(newShelf);
+	// Initializing;
+	private static final ShelfRepository SHELF_REPOSITORY = ShelfRepository.getInstance();
+	
+	//
+	public static void addProductToShelf(Shelf shelf, long idProduct){
+		shelf.setProduct(ProductService.getProductById(idProduct));
+		//SHELF_REPOSITORY.updateByID(shelf);
 	}
 	
-	public static void addProductToShelf(Shelf shelf, long idProduct) {
-		shelf.setProduct(ProductService.getProductById(idProduct));
+	// Create Shelf
+	public static void createShelf(int capacity, float price) {
+		Shelf newShelf = new Shelf(capacity, price);
+		SHELF_REPOSITORY.save(newShelf);
 	}
-
+	
+	public static void createShelf (Long productIDs, int capacity, float price) {
+		Shelf newShelf = new Shelf(productIDs,capacity,price);
+		SHELF_REPOSITORY.save(newShelf);
+	}
+	
+	// Get size of Data
+	public static int getSizeOfData(){
+		return SHELF_REPOSITORY.lenghtData();				
+	}
+	
+	// Get Shelf by ID
 	public static Shelf getShelfById(Long id) {
-		Shelf searchShelf = SHELFREPOSITORY.findById(id);
+		Shelf searchShelf = SHELF_REPOSITORY.findByID(id);
 		return searchShelf;
-	}	
-
-	public static void editShelf(Shelf editShelf) {
-		SHELFREPOSITORY.save(editShelf);
 	}
-
+	
+	// Edit Shelf
+	public static void editShelf (Shelf editShelf) {
+		SHELF_REPOSITORY.save(editShelf);
+	}
+	
+	// Check if Shelf Repository is empty
 	public static boolean isEmpty() {
-		return SHELFREPOSITORY.emptyData();
+		return SHELF_REPOSITORY.isEmpty();
+	}
+	
+	// Get all Shelfs
+	public static ArrayList<Shelf> getAllShelfs(){
+		return SHELF_REPOSITORY.getAll();
 	}
 
-	public static Iterator<Shelf> getAllShelfs() {
-		return SHELFREPOSITORY.findAll();
+	// Get all Shelfs ID's
+	public static ArrayList<Long> getAllShelfsIDs(){
+		return SHELF_REPOSITORY.getAllIDs();
 	}
-
-	public static Iterator<Long> getAllShelfsIDs() {
-		return SHELFREPOSITORY.getAllIDs();
+	
+	// Get all Shelfs ID's without products
+	public static ArrayList<Long> getAllShelfsIDsWithoutProduct(){
+		return SHELF_REPOSITORY.getIDsWithoutProduct();
 	}
-
-	public static ArrayList<Long> getAllShelfsIDsWithoutProduct() {
-		return SHELFREPOSITORY.getIDsWithoutProduct();
-	}
-
+	
+	// Remove Shelf
 	public static void removeShelf(long id) {
-		SHELFREPOSITORY.removeById(id);
+		SHELF_REPOSITORY.removeByID(id);
 	}
+
 }

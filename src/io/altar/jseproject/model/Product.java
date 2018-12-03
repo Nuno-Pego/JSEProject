@@ -1,50 +1,49 @@
 package io.altar.jseproject.model;
 
+//Imports:
 import java.util.ArrayList;
 
+//Class Model Product
 public class Product extends Entity {
 
-	// Attributes
+	// Fields:
 	private ArrayList<Long> listShelfs;
-	private int discont;
+	private int discountPrice;
 	private int iva;
 	private double pvp;
 
-	// Constructor
-	public Product(int discont, int iva, double pvp) {
+	// Constructor:
+	public Product(int discountPrice, int iva, double pvp) {
 		this.listShelfs = new ArrayList<Long>();
-		this.discont = discont;
+		this.discountPrice = discountPrice;
 		this.iva = iva;
 		this.pvp = pvp;
-
 	}
 	
-	public Product(ArrayList <Long> listShelfs, int discont, int iva, double pvp) {
-		this.listShelfs = new ArrayList<Long>();
-		this.discont = discont;
+	public Product(ArrayList<Long> listShelfs, int discountPrice, int iva, double pvp) {
+		this.listShelfs = listShelfs;
+		this.discountPrice = discountPrice;
 		this.iva = iva;
 		this.pvp = pvp;
-
 	}
 
-	// Getters and Setters
-
+	// Getters and Setters:
 	public ArrayList<Long> getListShelfs() {
 		return listShelfs;
 	}
 
-	public void setListShelfs(Long id) {
-		this.listShelfs.add(id);
+	public void setListShelfs(ArrayList<Long> listShelfs) {
+		this.listShelfs = listShelfs;
+	}
+	//-------------------------------------------------------
+	public double getDiscountPrice() {
+		return discountPrice;
 	}
 
-	public double getDiscont() {
-		return discont;
+	public void setDiscountPrice(int discountPrice) {
+		this.discountPrice = discountPrice;
 	}
-
-	public void setDiscont(int discont) {
-		this.discont = discont;
-	}
-
+	//-------------------------------------------------------
 	public double getIva() {
 		return iva;
 	}
@@ -52,26 +51,28 @@ public class Product extends Entity {
 	public void setIva(int iva) {
 		this.iva = iva;
 	}
-
+	//-------------------------------------------------------
 	public double getPvp() {
 		return pvp;
 	}
 
 	public void setPvp(double pvp) {
 		this.pvp = pvp;
-	}	
-
-	// toString
+	}
+	//-------------------------------------------------------
+	
+	// Add new ID Shelf to ListShelfs:
+	public void addToListShelfs(Long e){
+		this.listShelfs.add(e);
+	}
+	
+	// Override method toString:
 	@Override
 	public String toString() {
-
-		if (listShelfs == null) {
-			return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp
-					+ "$" + "]";
-		} else {
-
-			return "Product " + this.getId() + " [discont=" + discont + "%" + ", iva=" + iva + "%" + ", pvp=" + pvp
-					+ "$ " + getListShelfs().toString() + "]";
+		if (this.getListShelfs()==null){
+			return "Product " + this.getId() + " [discountPrice = " + discountPrice + "$, IVA=" + iva + "%, PVP=" + pvp +"$ " + "]";
+		}else{
+			return "Product " + this.getId() + " [discountPrice =" + discountPrice + "$, IVA =" + iva + "%, PVP =" + pvp +"$ "+ getListShelfs().toString() + "]";
 		}
 	}
 
