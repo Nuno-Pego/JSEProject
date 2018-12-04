@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ScannerUtils {
-	
+
 	// Initializing:
 	private Scanner scanner = new Scanner(System.in);
-	
+
 	// Interaction with user, get yes or no answer - return answer
 	public String checkGetYesOrNoAnswer(String message){
 		String userInput;
@@ -17,6 +17,12 @@ public class ScannerUtils {
 		} while (!userInput.equals("y")&&!userInput.equals("n"));
 		return userInput;
 	}
+
+	// Only reads user scanner to do a break in consult menu.
+	public void checkGetStringFromScanner(String message){
+		System.out.println(message);
+		String userInput = scanner.nextLine();		
+	}	
 
 	// Interaction with user checking input - return double value
 	public double checkGetDoubleFromScanner (String message, boolean canBeNull){
@@ -30,11 +36,11 @@ public class ScannerUtils {
 		} while (!isType(userInput, "Double"));
 		return Double.parseDouble(userInput); 
 	}
-		
+
 	public double checkGetDoubleFromScanner(String message){
 		return checkGetDoubleFromScanner(message, false);
 	}
-	
+
 	// Interaction with user checking input - return int value
 	public int checkGetIntFromScanner (String message, boolean canBeNull){
 		String userInput;
@@ -47,11 +53,11 @@ public class ScannerUtils {
 		} while (!isType(userInput, "Int"));
 		return Integer.parseInt(userInput); 
 	}
-	
+
 	public int checkGetIntFromScanner(String message){
 		return checkGetIntFromScanner(message, false);
 	}
-	
+
 	// Interaction with user checking input and validation with max value
 	public int checkGetIntFromScannerWithMax (String message, int max, boolean canBeNull){
 		int value;
@@ -63,11 +69,11 @@ public class ScannerUtils {
 		} while (value > max);
 		return value;
 	}
-	
+
 	public int checkGetIntFromScannerWithMax (String message, int max){
 		return checkGetIntFromScannerWithMax(message, max, false);
 	}
-	
+
 	// Interaction with user checking input and validation with range values - int
 	public int checkGetIntFromScannerWithRange (String message, int[] rangeValidValues, boolean canBeNull){
 		int value;
@@ -90,15 +96,15 @@ public class ScannerUtils {
 					System.out.println("The number must be in the range of: " + validValuesShow);
 				}
 			}
-			
+
 		} while (!validValue);
 		return value;
 	}
-	
+
 	public int checkGetIntFromScannerWithRange (String message, int[] rangeValidValues){
 		return checkGetIntFromScannerWithRange(message, rangeValidValues, false);
 	}
-	
+
 	// Interaction with user checking input and validation with range values - Long
 	public long checkGetLongFromScannerWithRange (String message, ArrayList<Long> rangeValidValues, boolean canBeNull){
 		long value;
@@ -121,37 +127,60 @@ public class ScannerUtils {
 					System.out.println("The number must be: " + validValuesShow);
 				}
 			}
-			
+
 		} while (!validValue);
 		return value;
 	}
-	
+
 	public long checkGetLongFromScannerWithRange (String message, ArrayList<Long> rangeValidValues){
 		return checkGetLongFromScannerWithRange(message, rangeValidValues, false);
 	}
-	
+
 	// Interaction with user checking input - return Long value
-		public long checkGetLongFromScanner (String message, boolean canBeNull){
-			String userInput;
-			do {
-				System.out.println(message);
-				userInput = scanner.nextLine();
-				if (canBeNull && userInput.equals("")) {
-					return -1;
+	public long checkGetLongFromScanner (String message, boolean canBeNull){
+		String userInput;
+		do {
+			System.out.println(message);
+			userInput = scanner.nextLine();
+			if (canBeNull && userInput.equals("")) {
+				return -1;
+			}
+		} while (!isType(userInput, "Long"));
+		return Long.parseLong(userInput); 
+	}
+
+	public long checkGetLongFromScanner(String message){
+		return checkGetLongFromScanner(message, false);
+	}
+
+	public ArrayList<Long> checkTest(String message, ArrayList<Long> rangeValidValues, boolean canBeNull) {
+		String userInput;
+		System.out.println(message);
+		userInput = scanner.nextLine();
+		ArrayList<Long> shelfsToSave = new ArrayList<Long>();
+		String[] userSplited = userInput.trim().split("\\s+");
+
+		//	
+		if (canBeNull && !userInput.equals("")) {
+			for (int i = 0; i < userSplited.length; i++) {
+				if (isType(userSplited[i],"Long")==false) {
+					checkTest(message, rangeValidValues, canBeNull);
+				} else {
+					shelfsToSave.add(Long.parseLong(userSplited[i]));
 				}
-			} while (!isType(userInput, "Long"));
-			return Long.parseLong(userInput); 
+			}
+		}else {
+			return null;
 		}
-		
-		public long checkGetLongFromScanner(String message){
-			return checkGetLongFromScanner(message, false);
-		}
-	
+
+		return shelfsToSave; 
+	}
+
 	// Check if variable is type.
 	public boolean isType (String input, String match){
 		Scanner checkScanner = new Scanner(input);
 		boolean answer = false;
-		
+
 		switch (match) {
 		case "Int":
 			if (checkScanner.hasNextInt()){
@@ -176,7 +205,7 @@ public class ScannerUtils {
 			break;
 		case "Long":
 			if (checkScanner.hasNextLong()){
-				answer = true;
+				answer = true; 
 			}else {
 				System.out.println("Invalid number, insert an Long number!");
 			}

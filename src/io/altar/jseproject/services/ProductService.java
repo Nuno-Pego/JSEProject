@@ -1,7 +1,7 @@
 package io.altar.jseproject.services;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.repositories.ProductRepository;
 
@@ -43,12 +43,12 @@ public class ProductService {
 	}
 	
 	// Get All Products
-	public static Iterator<Product> getAllProducts(){
+	public static Collection<Product> getAllProducts(){
 		return PRODUCT_REPOSITORY.getAll();
 	}
 	
 	// Get All Product ID's
-	public static Iterator<Long> getAllProductsIDs(){
+	public static Collection<Long> getAllProductsIDs(){
 		return PRODUCT_REPOSITORY.getAllIDs();
 	}
 	
