@@ -16,19 +16,25 @@ public class EditProductMenu implements State{
 
 	@Override
 	public int execute() {
+		
+		if(!ProductService.isEmpty()) {			
+		
 		// Show all exist Products ID's
 		showProductsInDB();
 
 		// Show Menu
 		showMenu();
-
+		}
+		
 		return 1;
 	}
 
-	private void showMenu() {
+	private void showMenu() {		
+		
+		// TODO: RANGE - Get ID's without Product + ID of the product assigned
 		ArrayList<Long> rangeIDsExist = new ArrayList<Long>(ProductService.getAllProductsIDs());
-
-
+		
+		
 		int [] rangeIvas = {6,12,23};
 		System.out.println("--------------WISER STOCK: Products Menu--------------");
 		System.out.println("--                  Edit a Product                  --");
@@ -36,14 +42,15 @@ public class EditProductMenu implements State{
 		if (id!=-1) {
 			Product editProduct = ProductService.getProductById(id);
 
-			ArrayList<Long> rangeIDsWithoutProduct = new ArrayList<Long>(ShelfService.getAllShelfsIDsWithoutProduct());
+			ArrayList<Long> rangeIDsShelfsWithoutProduct = new ArrayList<Long>(ShelfService.getAllShelfsIDsWithoutProduct());
 
 			discount = SCANNER_UTILS.checkGetIntFromScannerWithMax("Input discount (%) (" + editProduct.getDiscountPrice() + ") " + " : ", 100, true);		
 			iva = SCANNER_UTILS.checkGetIntFromScannerWithRange("Input IVA (6% , 12% and 23%) (" + editProduct.getIva() + ") " + " : ", rangeIvas, true);
 			pvp = SCANNER_UTILS.checkGetDoubleFromScanner("Input price ($) (" + editProduct.getPvp() + ") " + " : ", true);
 
-			if(ShelfService.getAllShelfsIDsWithoutProduct().size()>0) {
-				shelfIds = SCANNER_UTILS.checkTest("Input Shelf ID or Press Enter to delete (" + editProduct.getListShelfs().toString() + ") " + " : ", rangeIDsWithoutProduct , true);
+			if(!ShelfService.getAllShelfsIDsWithoutProduct().isEmpty()) {
+				
+				shelfIds = SCANNER_UTILS.checkTest("Input Shelf ID or Press Enter to delete (" + editProduct.getListShelfs().toString() + ") " + " : ", rangeIDsShelfsWithoutProduct , true);
 
 				if (shelfIds == null) {
 					shelfIds = new ArrayList<Long>();
@@ -71,12 +78,10 @@ public class EditProductMenu implements State{
 		Iterator<Long> productIDsIterator = ProductService.getAllProductsIDs().iterator();
 		// Show all Products:
 		System.out.println("--------------See all Products--------------");
-		long id;
-		ArrayList<Long> rangeIDs = new ArrayList<Long>();
+		long id;	
 		while (productIDsIterator.hasNext()) {
 			id = productIDsIterator.next();
-			System.out.print(id + " ");				
-			rangeIDs.add(id);
+			System.out.print(id + " ");			
 		}
 		System.out.println("--------------------------------------------");
 	}
